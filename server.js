@@ -4,6 +4,7 @@ const app = express();
 
 app.enable("trust proxy");
 app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: true }));
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLmDp_FINxuACikM8Y0FFwpG0UM77vrPXHXnybzlQPKlfhzj4EcVFPfNjgsZCHvTnZMQ/exec";
 
@@ -15,9 +16,13 @@ app.get("/", (req, res) => {
 
 // POST-Upload vom SIM800
 app.post("/upload", async (req, res) => {
-    console.log("POST Upload:", req.body);
+    console.log("POST Upload Body:", req.body);
+    console.log("POST Upload Query:", req.query);
 
-    const params = new URLSearchParams(req.body).toString();
+    // Body oder Query verwenden – je nachdem, was der SIM800 liefert
+    const data = Object.keys(req.body).length ? req.body : req.query;
+
+    const params = new URLSearchParams(data).toString();
     const finalUrl = GOOGLE_SCRIPT_URL + "?" + params;
 
     try {
