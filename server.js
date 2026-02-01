@@ -5,7 +5,7 @@ const app = express();
 app.get("/upload", async (req, res) => {
     console.log("Bienenwaage Upload:", req.query);
 
-    const googleUrl = "DEINE_GOOGLE_SCRIPT_URL_HIER";
+    const googleUrl = "https://script.google.com/macros/s/AKfycbwcZo9e-uUUpYPfFedizuy9bdKdNQ-UpidLpTYA-KQQdfuFdtE/exec?";
 
     const params = new URLSearchParams(req.query).toString();
     const finalUrl = googleUrl + "?" + params;
