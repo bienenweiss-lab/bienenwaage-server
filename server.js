@@ -1,3 +1,4 @@
+app.enable("trust proxy");
 const fetch = require("node-fetch");
 const express = require("express");
 const app = express();
