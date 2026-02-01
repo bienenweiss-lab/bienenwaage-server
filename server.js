@@ -5,7 +5,7 @@ const app = express();
 app.enable("trust proxy");
 app.use(express.json({ limit: "1mb" }));
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcZo9e-uUUpYPfFedizuy9bdKdNQ-UpidLpTYA-KQQdfuFdtE/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLmDp_FINxuACikM8Y0FFwpG0UM77vrPXHXnybzlQPKlfhzj4EcVFPfNjgsZCHvTnZMQ/exec";
 
 // Test-Route
 app.get("/", (req, res) => {
