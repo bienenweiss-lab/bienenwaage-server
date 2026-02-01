@@ -2,22 +2,22 @@ const express = require("express");
 const fetch = require("node-fetch");
 const app = express();
 
-// WICHTIG: erst jetzt existiert 'app'
 app.enable("trust proxy");
+app.use(express.json({ limit: "1mb" }));
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcZo9e-uUUpYPfFedizuy9bdKdNQ-UpidLpTYA-KQQdfuFdtE/exec";
 
-// Test-Route für SIM800: zeigt, ob der Node-Server erreicht wird
+// Test-Route
 app.get("/", (req, res) => {
     console.log("Root wurde aufgerufen");
     res.send("OK ROOT");
 });
 
-// Haupt-Upload-Route
-app.get("/upload", async (req, res) => {
-    console.log("Bienenwaage Upload:", req.query);
+// POST-Upload vom SIM800
+app.post("/upload", async (req, res) => {
+    console.log("POST Upload:", req.body);
 
-    const params = new URLSearchParams(req.query).toString();
+    const params = new URLSearchParams(req.body).toString();
     const finalUrl = GOOGLE_SCRIPT_URL + "?" + params;
 
     try {
