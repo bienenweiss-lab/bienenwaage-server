@@ -1,21 +1,23 @@
-app.enable("trust proxy");
-const fetch = require("node-fetch");
 const express = require("express");
+const fetch = require("node-fetch");
 const app = express();
+
+// WICHTIG: erst jetzt existiert 'app'
+app.enable("trust proxy");
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcZo9e-uUUpYPfFedizuy9bdKdNQ-UpidLpTYA-KQQdfuFdtE/exec";
 
 app.get("/upload", async (req, res) => {
     console.log("Bienenwaage Upload:", req.query);
 
-    // WICHTIG: KEIN ? am Ende!
-    const googleUrl = "https://script.google.com/macros/s/AKfycbwcZo9e-uUUpYPfFedizuy9bdKdNQ-UpidLpTYA-KQQdfuFdtE/exec";
-
     const params = new URLSearchParams(req.query).toString();
-    const finalUrl = googleUrl + "?" + params;
+    const finalUrl = GOOGLE_SCRIPT_URL + "?" + params;
 
     try {
         const response = await fetch(finalUrl);
         const text = await response.text();
-        res.send(text);  // gibt "OK" zurück
+        console.log("Antwort von Google:", text);
+        res.send(text);
     } catch (err) {
         console.error("Fehler beim Google Upload:", err);
         res.status(500).send("ERROR");
