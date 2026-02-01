@@ -20,3 +20,6 @@ app.get("/upload", async (req, res) => {
         res.status(500).send("ERROR");
     }
 });
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log("Server läuft auf Port", port));
